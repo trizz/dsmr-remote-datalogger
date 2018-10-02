@@ -4,7 +4,7 @@ Docker container for the [DSMR Reader Remote Datalogger](https://dsmr-reader.rea
 ## Usage
 You can pass the host and the API key as environment variables and optionally also pass the 
 the USB device (default: `/dev/ttyUSB0`). Don't forget to add the `--device` parameter to make your DSMR cable available
-in the docker container.
+in the docker container, or run the container with the `--privileged` flag (not recommended).
 
 
 ```
