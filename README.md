@@ -10,8 +10,8 @@ in the docker container, or run the container with the `--privileged` flag (not 
 ```
 docker run -d \
     --device=/dev/ttyUSB0 \
-    --e DSMR_USB_PORT=/dev/ttyUSB0 \
-    --e DSMR_API_URL=https://<YOUR_DSMR_HOST>/api/v1/datalogger/dsmrreading \
-    --e DSMR_API_KEY=<YOUR_API_KEY> \
+    -e DSMR_USB_PORT=/dev/ttyUSB0 \
+    -e DSMR_API_URL=https://<YOUR_DSMR_HOST>/api/v1/datalogger/dsmrreading \
+    -e DSMR_API_KEY=<YOUR_API_KEY> \
     trizz/dsmr-remote-datalogger:latest
 ```
