@@ -18,3 +18,10 @@ docker run -d \
 Log files are being written to `/etc/dsmr_logs` in the container. Override this
 location if you want to keep logfiles between containers or have easy access to them:
 `-v /path/on/host:/etc/dsmr_logs`
+
+## Supported architectures:
+- `linux/amd64`
+- `linux/arm64`
+- `linux/386`
+- `linux/arm/v7`
+- `linux/arm/v6`
