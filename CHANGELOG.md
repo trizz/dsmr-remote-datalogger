@@ -1,6 +1,8 @@
 ## Changelog
 
 ### Unreleased / develop
+
+### v1.0.0 - 2019-10-09
 - Replace console output with a (rotating) log handler.
 - Move to `python:3-alpine` base image for greater compatibility with different platforms.
 - Extract the dependencies to `requirements.txt`.
