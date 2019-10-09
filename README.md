@@ -25,3 +25,13 @@ location if you want to keep logfiles between containers or have easy access to 
 - `linux/386`
 - `linux/arm/v7`
 - `linux/arm/v6`
+
+It is not necessary to define the architecture you want to use when creating a container, Docker will try 
+to find and match the correct image for your host. 
+
+## Versioning
+This project uses [Semver](https://semver.org) for versioning. For each release three Docker images will
+be provided:
+- `latest` - Using this image will ensure you always have the latest version.
+- `v1` - This image will be created for every release in the v1.x.x branch. Use this image if you want the latest version, but also want to be sure updating your container does not break stuff.
+- `v1.0.0` - For each version an image will be created for those who want to use a specific version.  
