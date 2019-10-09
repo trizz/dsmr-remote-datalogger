@@ -1,7 +1,9 @@
-FROM resin/raspberry-pi-alpine-python:3.7-slim
+FROM python:3-alpine
 
 COPY dsmr_datalogger_api_client.py ./
+COPY requirements.txt ./
 
-RUN pip install --no-cache-dir pyserial==3.2.1 requests==2.12.4
+RUN mkdir -p /etc/dsmr_logs
+RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python", "./dsmr_datalogger_api_client.py"]

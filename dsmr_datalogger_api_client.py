@@ -1,6 +1,7 @@
 from time import sleep
-
+from logging.handlers import RotatingFileHandler
 from serial.serialutil import SerialException
+import logging
 import requests
 import serial
 import os
@@ -9,9 +10,22 @@ API_SERVERS = (
     (os.getenv('DSMR_API_URL', "127.0.0.1"), os.getenv('DSMR_API_KEY', "API-KEY")),
 )
 
+# Set up the logger instance. Create a maximum of 10 log files of 1MB each.
+log_level = getattr(logging, os.getenv('LOG_LEVEL', 'WARNING').upper(), None)
+if not isinstance(log_level, int):
+    raise ValueError('Invalid log level: %s' % os.getenv('log'))
+
+# Configure the logging instance.
+handler = RotatingFileHandler('/etc/dsmr_logs/dsmr-datalogger.log', maxBytes=1e6, backupCount=10)
+handler.setFormatter(logging.Formatter('[%(asctime)s - %(levelname)s] %(message)s'))
+
+logger = logging.getLogger('dsmr-datalogger')
+logger.addHandler(handler)
+logger.setLevel(log_level)
+
 
 def main():
-    print ('Starting...')
+    logger.info('Starting...')
 
     for telegram in read_telegram():
         for current_server in API_SERVERS:
@@ -34,8 +48,11 @@ def read_telegram():
     serial_handle.rtscts = 0
     serial_handle.timeout = 20
 
-    # This might fail, but nothing we can do so just let it crash.
-    serial_handle.open()
+    try:
+        # This might fail, but nothing we can do so just let it crash.
+        serial_handle.open()
+    except SerialException as error:
+        logger.error('Serial connection failed: {}'.format(str(error)))
 
     telegram_start_seen = False
     buffer = ''
@@ -46,7 +63,7 @@ def read_telegram():
             data = serial_handle.readline()
         except SerialException as error:
             # Something else and unexpected failed.
-            print('Serial connection failed:', error)
+            logger.error('Serial connection failed: {}'.format(str(error)))
             return  # Break out of yield.
 
         try:
@@ -81,12 +98,14 @@ def send_telegram(telegram, api_url, api_key):
         api_url,
         headers={'X-AUTHKEY': api_key},
         data={'telegram': telegram},
+        timeout=60,
     )
 
     # Old versions of DSMR-reader return 200, new ones 201.
     if response.status_code not in (200, 201):
-        # Or you will find the error (hint) in the reponse body on failure.
-        print('API error: {}'.format(response.text))
+        # Or you will find the error (hint) in the response body on failure.
+        logger.error('API error: {}'.format(response.text))
+
 
 if __name__ == '__main__':
     main()
