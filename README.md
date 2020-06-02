@@ -22,6 +22,7 @@ location if you want to keep logfiles between containers or have easy access to 
 ## Supported architectures:
 - `linux/amd64`
 - `linux/arm64`
+- `linux/aarch64`
 - `linux/386`
 - `linux/arm/v7`
 - `linux/arm/v6`
