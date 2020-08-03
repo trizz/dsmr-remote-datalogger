@@ -1,5 +1,7 @@
 # dsmr-remote-datalogger
-Docker container for the [DSMR Reader Remote Datalogger](https://dsmr-reader.readthedocs.io/en/latest/api.html#script).
+Docker container for the [DSMR Reader Remote Datalogger](https://dsmr-reader.readthedocs.io/en/latest/installation/datalogger.html).
+No modifications are made to the script so you can use it as described in the [documentation](https://dsmr-reader.readthedocs.io/en/latest/installation/datalogger.html#api-config-env)
+but without the need to configure a Python environment yourself.
 
 ## Usage
 You can pass the host and the API key as environment variables and optionally also pass the 
@@ -9,20 +11,21 @@ in the docker container, or run the container with the `--privileged` flag (not 
 ```
 docker run -d \
     --device=/dev/ttyUSB0 \
-    -e DSMR_USB_PORT=/dev/ttyUSB0 \
-    -e DSMR_API_URL=https://<YOUR_DSMR_HOST>/api/v1/datalogger/dsmrreading \
-    -e DSMR_API_KEY=<YOUR_API_KEY> \
+    --name dsmr-remote-datalogger
+    -e DATALOGGER_API_HOSTS=https://127.0.0.1/api/v1/datalogger/dsmrreading \
+    -e DATALOGGER_API_KEYS=<YOUR_API_KEY> \
+    -e DATALOGGER_INPUT_METHOD=serial \
+    -e DATALOGGER_SERIAL_PORT=/dev/ttyUSB0 \
+    -e DATALOGGER_SERIAL_BAUDRATE=115200 \
     trizz/dsmr-remote-datalogger:latest
 ```
 
-Log files are being written to `/etc/dsmr_logs` in the container. Override this
-location if you want to keep logfiles between containers or have easy access to them:
-`-v /path/on/host:/etc/dsmr_logs`
+Log files are being written to the default Docker logs. You can use `docker logs dsmr-remote-datalogger`
+to view them.
 
 ## Supported architectures:
 - `linux/amd64`
 - `linux/arm64`
-- `linux/aarch64`
 - `linux/386`
 - `linux/arm/v7`
 - `linux/arm/v6`

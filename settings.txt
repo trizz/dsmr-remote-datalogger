@@ -1,0 +1,18 @@
+### The DSMR-reader API('s) to forward telegrams to:
+DATALOGGER_API_HOSTS=https://127.0.0.1/api/v1/datalogger/dsmrreading
+DATALOGGER_API_KEYS=fakeKey
+
+### Serial port settings:
+DATALOGGER_INPUT_METHOD=serial
+DATALOGGER_SERIAL_PORT=/dev/ttyUSB0
+DATALOGGER_SERIAL_BAUDRATE=115200
+
+### Network socket settings:
+#DATALOGGER_INPUT_METHOD=ipv4
+#DATALOGGER_NETWORK_HOST=
+#DATALOGGER_NETWORK_PORT=
+
+### Additional settings:
+#DATALOGGER_TIMEOUT=
+#DATALOGGER_SLEEP=
+#DATALOGGER_DEBUG_LOGGING=true

@@ -2,8 +2,8 @@
 
 ### Unreleased / develop
 
-### v1.0.1 - 2020-06-02
-- Added `aarch64` architecture.
+### v2.0.0 - 2020-08-??
+- [BREAKING] Change the script to the new v4 one. This will break existing configurations.
 
 ### v1.0.0 - 2019-10-09
 - Replace console output with a (rotating) log handler.
