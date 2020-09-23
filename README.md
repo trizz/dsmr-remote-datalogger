@@ -8,11 +8,13 @@ You can pass the host and the API key as environment variables and optionally al
 the USB device (default: `/dev/ttyUSB0`). Don't forget to add the `--device` parameter to make your DSMR cable available
 in the docker container, or run the container with the `--privileged` flag (not recommended).
 
+Make sure that if you use a different port for the reader instance of DSMR, instead of the default 80(http) or 443(https), it's included in <YOUR_HOST_URL>.
+
 ```
 docker run -d \
     --device=/dev/ttyUSB0 \
-    --name dsmr-remote-datalogger
-    -e DATALOGGER_API_HOSTS=https://127.0.0.1/api/v1/datalogger/dsmrreading \
+    --name dsmr-remote-datalogger \
+    -e DATALOGGER_API_HOSTS=<YOUR_HOST_URL> \
     -e DATALOGGER_API_KEYS=<YOUR_API_KEY> \
     -e DATALOGGER_INPUT_METHOD=serial \
     -e DATALOGGER_SERIAL_PORT=/dev/ttyUSB0 \
